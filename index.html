@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yedu Krishnan | Software Architect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,800&display=swap" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --accent: #6a6aff;
+      --pink: #ff66aa;
+      --glass: rgba(10, 10, 25, 0.7);
+    }
+
+    body, html {
+      margin: 0; padding: 0;
+      width: 100%; overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      color: white; background-color: #020205;
+      scroll-behavior: smooth;
+    }
+
+    #canvas-container {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+    }
+
+    header {
+      position: fixed; top: 1.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; justify-content: space-between; align-items: center;
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 100px; padding: 0.6rem 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 90%; max-width: 1100px; z-index: 100;
+    }
+
+    .logo { font-weight: 800; letter-spacing: 3px; font-size: 1rem; }
+    .nav-links { display: flex; gap: 1.5rem; font-size: 0.7rem; font-weight: 600; }
+    .nav-links a { color: rgba(255,255,255,0.6); text-decoration: none; transition: 0.3s; }
+    .nav-links a:hover { color: white; }
+
+    .content { position: relative; z-index: 10; width: 100%; }
+
+    section {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 10vh 10%;
+      box-sizing: border-box;
+    }
+
+    .hero-box h1 {
+      font-size: clamp(3.5rem, 12vw, 8rem);
+      line-height: 0.85; margin: 0;
+      font-weight: 800;
+      letter-spacing: -4px;
+      background: linear-gradient(to bottom, #fff 30%, #444 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 40px; padding: 3.5rem;
+      max-width: 600px;
+      opacity: 0; transform: translateY(60px);
+    }
+    .glass-card.is-visible { opacity: 1; transform: translateY(0); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    .tag-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.75rem;
+      transition: 0.3s;
+    }
+    .tag:hover { background: var(--accent); border-color: var(--accent); }
+
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+    .stat-item h3 { font-size: 1.5rem; margin: 0; color: var(--accent); }
+    .stat-item p { font-size: 0.8rem; opacity: 0.5; margin: 0; text-transform: uppercase; }
+
+    .highlight { color: var(--accent); font-weight: 600; }
+
+    @media (max-width: 768px) {
+      section { padding: 5rem 5%; }
+      .nav-links { display: none; }
+      .hero-box h1 { letter-spacing: -2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="canvas-container"></div>
+
+  <header>
+    <div class="logo">YeduKulan</div>
+    <nav class="nav-links">
+      <a href="#home">HOME</a>
+      <a href="#about">BIO</a>
+      <a href="#vision">VISION</a>
+      <a href="#skills">STACK</a>
+      <a href="#education">PATH</a>
+    </nav>
+    <div id="sound-toggle" style="cursor: pointer; font-size: 1.2rem; filter: drop-shadow(0 0 10px var(--accent));">🔇</div>
+  </header>
+
+  <div class="content">
+    <section id="home">
+      <div class="hero-box">
+        <p style="letter-spacing: 8px; color: var(--accent); margin-bottom: 20px; font-weight: 600;">SOFTWARE ENGINEER</p>
+        <h1>YEDU<br>KRISHNAN</h1>
+        <p style="opacity: 0.4; max-width: 500px; line-height: 1.8; margin-top: 20px; font-size: 0.9rem;">
+          Bridging the gap between computational logic and human-centric design through scalable software and immersive 3D interfaces.
+        </p>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="glass-card reveal">
+        <h2 style="margin-top:0; font-size: 2.5rem;">The Persona</h2>
+        <p style="line-height: 1.8; opacity: 0.8;">
+          I am a software developer based in Kerala, currently pursuing my BCA at <span class="highlight">Kerala University</span>. My journey is defined by a relentless curiosity for how data flows through systems.
+        </p>
+        <p style="line-height: 1.8; opacity: 0.8;">
+          Whether it's optimizing a backend with <span class="highlight">Node.js</span> or crafting a complex 3D world, my focus is on efficiency and "Goosebumps-inducing" user experiences.
+        </p>
+        <div class="stat-grid">
+          <div class="stat-item"><h3>3+</h3><p>Years Learning</p></div>
+          <div class="stat-item"><h3>15+</h3><p>Projects Built</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vision" style="justify-content: flex-end;">
+      <div class="glass-card reveal">
+        <h2 style="margin-top:0; font-size: 2.5rem; color: var(--pink);">Philosophy</h2>
+        <p style="line-height: 1.8; opacity: 0.8;">
+          I believe code should be <span class="highlight">invisible</span>. The best software doesn't just work—it disappears into the background while empowering the user. 
+        </p>
+        <ul style="list-style: none; padding: 0; line-height: 2;">
+          <li>▹ <b>Modular Thinking:</b> Building blocks, not monoliths.</li>
+          <li>▹ <b>UI Immersivity:</b> Using WebGL/Three.js to break the 2D plane.</li>
+          <li>▹ <b>Scalability:</b> Future-proofing every line of logic.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="glass-card reveal">
+        <h2 style="margin-top:0; font-size: 2.5rem;">Tech Stack</h2>
+        
+        <h4 style="color: var(--accent); margin-bottom: 15px; letter-spacing: 2px;">CORE LANGUAGES</h4>
+        <div class="tag-container">
+          <span class="tag">Java</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">JavaScript (ES6+)</span><span class="tag">PHP</span>
+        </div>
+
+        <h4 style="color: var(--accent); margin-top: 2.5rem; margin-bottom: 15px; letter-spacing: 2px;">ECOSYSTEM</h4>
+        <div class="tag-container">
+          <span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">MongoDB</span><span class="tag">MySQL</span>
+          <span class="tag">Three.js</span><span class="tag">Handlebars</span><span class="tag">Git</span><s
+        </div>
+      </div>
+    </section>
+
+    <section id="education" style="justify-content: center;">
+      <div class="glass-card reveal" style="max-width: 800px; width: 100%;">
+        <h2 style="margin-top:0; text-align: center;">Academic Roadmap</h2>
+        
+        <div style="display: flex; gap: 40px; margin-top: 3rem;">
+          <div style="flex: 1; border-right: 1px solid rgba(255,255,255,0.1); padding-right: 20px;">
+            <span style="color: var(--accent); font-weight: 800;">2023 - 2026</span>
+            <h3>BCA</h3>
+            <p style="opacity: 0.6;">Kerala University</p>
+            <p style="font-size: 0.8rem;">Focus: DSA, Database Systems, Web Tech.</p>
+          </div>
+          <div style="flex: 1;">
+            <span style="color: var(--pink); font-weight: 800;">2026 - 2028</span>
+            <h3>MCA (Advance)</h3>
+            <p style="opacity: 0.6;">Abdul Kalam University</p>
+            <p style="font-size: 0.8rem;">Specializing in Software Architecture.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="padding: 5rem; text-align: center; opacity: 0.3; font-size: 0.7rem; letter-spacing: 4px;">
+      DESIGNED FOR THE FUTURE · YEDUKRISHNAN © 2026
+    </footer>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+    // --- Dynamic Cinematic Audio Engine ---
+    let audioCtx, mainGain, filter, osc1, osc2, lfo;
+    let isPlaying = false;
+
+    function initAudio() {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      mainGain = audioCtx.createGain();
+      mainGain.gain.setValueAtTime(0, audioCtx.currentTime);
+
+      filter = audioCtx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.Q.value = 5;
+
+      // Bass Drone
+      osc1 = audioCtx.createOscillator();
+      osc1.type = "sawtooth";
+      osc1.frequency.setValueAtTime(50, audioCtx.currentTime);
+
+      // Shimmer Highs
+      osc2 = audioCtx.createOscillator();
+      osc2.type = "triangle";
+      osc2.frequency.setValueAtTime(150, audioCtx.currentTime);
+
+      lfo = audioCtx.createOscillator();
+      lfo.frequency.value = 0.5;
+      const lfoGain = audioCtx.createGain();
+      lfoGain.gain.value = 10;
+      
+      lfo.connect(lfoGain);
+      lfoGain.connect(osc1.frequency);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      filter.connect(mainGain);
+      mainGain.connect(audioCtx.destination);
+
+      osc1.start(); osc2.start(); lfo.start();
+    }
+
+    const soundBtn = document.getElementById('sound-toggle');
+    soundBtn.addEventListener('click', () => {
+      if (!audioCtx) initAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      if (!isPlaying) {
+        mainGain.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 2);
+        soundBtn.innerText = "🔊";
+        isPlaying = true;
+      } else {
+        mainGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+        soundBtn.innerText = "🔇";
+        isPlaying = false;
+      }
+    });
+
+    // --- Core 3D Scene ---
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+    const mainGroup = new THREE.Group();
+    scene.add(mainGroup);
+
+    // Geometry
+    const knot = new THREE.Mesh(
+      new THREE.TorusKnotGeometry(2.5, 0.6, 250, 40),
+      new THREE.MeshPhysicalMaterial({
+        color: 0x6a6aff, metalness: 0.9, roughness: 0.1,
+        transmission: 0.5, thickness: 2, emissive: 0x111122
+      })
+    );
+    mainGroup.add(knot);
+
+    // Starfield
+    const starGeo = new THREE.BufferGeometry();
+    const starArr = new Float32Array(4000 * 3);
+    for(let i=0; i<4000*3; i++) starArr[i] = (Math.random()-0.5)*60;
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starArr, 3));
+    const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({size: 0.03, color: 0xffffff}));
+    scene.add(stars);
+
+    // Lights
+    const l1 = new THREE.PointLight(0x6a6aff, 80); l1.position.set(5, 5, 5); scene.add(l1);
+    const l2 = new THREE.PointLight(0xff66aa, 50); l2.position.set(-5, -5, 5); scene.add(l2);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+
+    camera.position.z = 12;
+
+    const composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    composer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85));
+
+    // --- Scroll Magic ---
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Knot Positions
+    const tl = gsap.timeline({ scrollTrigger: { trigger: ".content", start: "top top", end: "bottom bottom", scrub: 1 }});
+    tl.to(mainGroup.position, { x: 4, y: -1 })
+      .to(mainGroup.position, { x: -4, y: 1 })
+      .to(mainGroup.position, { x: 4, y: 0 })
+      .to(mainGroup.position, { x: 0, z: 2 });
+
+    // Card reveals
+    document.querySelectorAll('.reveal').forEach(card => {
+      ScrollTrigger.create({
+        trigger: card, start: "top 80%",
+        onEnter: () => card.classList.add('is-visible')
+      });
+    });
+
+    // Audio & Visual Loop
+    let lastScrollY = 0;
+    let scrollVel = 0;
+
+    function animate() {
+      const time = Date.now() * 0.001;
+      
+      // Calculate Scroll Velocity for Audio
+      scrollVel = Math.abs(window.scrollY - lastScrollY);
+      lastScrollY = window.scrollY;
+
+      if (isPlaying) {
+        // Frequency reacts to scroll speed
+        const targetFreq = 100 + (scrollVel * 5);
+        filter.frequency.setTargetAtTime(Math.min(targetFreq + 300, 2000), audioCtx.currentTime, 0.1);
+        osc1.frequency.setTargetAtTime(50 + (scrollVel * 0.5), audioCtx.currentTime, 0.1);
+      }
+
+      knot.rotation.y = time * 0.2;
+      knot.rotation.x = time * 0.1;
+      stars.position.z = (window.scrollY * 0.01) % 20;
+
+      composer.render();
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
